@@ -1,26 +1,30 @@
 from django.contrib import admin
-from .models import Question, Choice, Submission
-from django.contrib.admin import TabularInline
+from .models import Question, Choice, Submission, Lesson
 
 
-class ChoiceInline(TabularInline):
+class ChoiceInline(admin.TabularInline):
     model = Choice
-    extra = 4
+    extra = 1
 
 
-class QuestionInline(TabularInline):
+class QuestionInline(admin.TabularInline):
     model = Question
     extra = 1
 
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
+    list_display = ('question_text',)
+
+
 
 
 class LessonAdmin(admin.ModelAdmin):
     inlines = [QuestionInline]
+    list_display = ('title',)
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Choice)
+admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Submission)
+
